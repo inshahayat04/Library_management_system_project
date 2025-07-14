@@ -127,31 +127,33 @@ REFERENCES issued_status(issued_id);
 -- "978-1-60129-456-2', 'To Kill a Mockingbird', 'Classic', 6.00, 'yes', 'Harper Lee', 'J.B. Lippincott & Co.')"
 
 ```sql
-INSERT INTO books(isbn, book_title, category, rental_price, status, author, publisher)
-VALUES('978-1-60129-456-2', 'To Kill a Mockingbird', 'Classic', 6.00, 'yes', 'Harper Lee', 'J.B. Lippincott & Co.');
-SELECT * FROM books;
+INSERT INTO books(isbn,book_title,category,rental_price,status,author,publisher) 
+values 
+('978-1-60129-456-2', 'To Kill a Mockingbird', 'Classic', 6.00, 'yes', 'Harper Lee', 'J.B. Lippincott & Co.');
+select * from books;
 ```
 **Task 2: Update an Existing Member's Address**
 
 ```sql
 UPDATE members
-SET member_address = '125 Oak St'
-WHERE member_id = 'C103';
+SET member_address='125 Main St'
+where member_id='C101'
+select * from members;
 ```
 
 **Task 3: Delete a Record from the Issued Status Table**
 -- Objective: Delete the record with issued_id = 'IS121' from the issued_status table.
 
 ```sql
-DELETE FROM issued_status
-WHERE   issued_id =   'IS121';
+DELETE from issued_status 
+where issued_id='IS121';
+select * from issued_status;
 ```
 
 **Task 4: Retrieve All Books Issued by a Specific Employee**
 -- Objective: Select all books issued by the employee with emp_id = 'E101'.
 ```sql
-SELECT * FROM issued_status
-WHERE issued_emp_id = 'E101'
+select * from issued_status where issued_emp_id = 'E101';
 ```
 
 
@@ -159,12 +161,7 @@ WHERE issued_emp_id = 'E101'
 -- Objective: Use GROUP BY to find members who have issued more than one book.
 
 ```sql
-SELECT
-    issued_emp_id,
-    COUNT(*)
-FROM issued_status
-GROUP BY 1
-HAVING COUNT(*) > 1
+select issued_emp_id, count(*) AS total_books_issued from issued_status GROUP BY issued_emp_id HAVING count(*)>1;
 ```
 
 ### 3. CTAS (Create Table As Select)
@@ -178,6 +175,8 @@ FROM issued_status as ist
 JOIN books as b
 ON ist.issued_book_isbn = b.isbn
 GROUP BY b.isbn, b.book_title;
+
+select * from book_issued_cnt;
 ```
 
 
@@ -340,7 +339,6 @@ CALL add_return_records('RS138', 'IS135', 'Good');
 CALL add_return_records('RS148', 'IS140', 'Good');
 
 ```
-
 
 
 
